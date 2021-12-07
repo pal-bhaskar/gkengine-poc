@@ -12,7 +12,7 @@ import com.demo.userservice.model.Customer;
 @FeignClient(name = "database-service", url = "${DATABASE_SERVICE_HOST:http://localhost}:8083")
 public interface DBServiceClient {
 
-	@GetMapping(value = "/private/v1/get/allcustomer", produces = "application/json")
+    @GetMapping(value = "/private/v1/get/allcustomer", produces = "application/json")
     List<Customer> getCustomers();
 
     @PostMapping(value = "/private/v1/add/customer")
