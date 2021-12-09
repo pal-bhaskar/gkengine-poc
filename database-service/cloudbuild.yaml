@@ -7,6 +7,6 @@ steps:
     entrypoint: gradle
     args: ["assemble"]
   - name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "gcr.io/$GOOGLE_CLOUD_PROJECT/database-service", "--build-arg=JAR_FILE=build/libs/database-service-1.0.1.jar", "."]
-images: ["gcr.io/$GOOGLE_CLOUD_PROJECT/database-service"]
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/database-service", "--build-arg=JAR_FILE=build/libs/database-service-1.0.1.jar", "."]
+images: ["gcr.io/$PROJECT_ID/database-service"]
 # [END gcloud build gradle]
