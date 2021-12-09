@@ -1,12 +1,12 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.1.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'org.springframework.boot' version '2.3.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9'
 	id 'java'
 }
 
 group = 'com.demo'
 version = '1.0.1'
-sourceCompatibility = '1.11'
+sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
