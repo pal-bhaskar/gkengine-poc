@@ -1,6 +1,7 @@
 package com.demo.userservice.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,5 +42,17 @@ public class UserSvcRestController {
 	public void addContent(@RequestBody Customer customer) {
 		databaseService.save(customer);
 		log.info("customer data saved successfully..");
+	}
+	
+	@GetMapping("/get/customer/{id}")
+	public Customer getCustomerById(@PathVariable Long id) {
+		
+		Optional<Customer> customer = databaseService.findCustomerById(id);
+		if (customer.isPresent()) {
+			Customer c = customer.get();
+			log.info("returning customer list ... {}",c);
+			return c;
+		}		
+		return null;
 	}
 }

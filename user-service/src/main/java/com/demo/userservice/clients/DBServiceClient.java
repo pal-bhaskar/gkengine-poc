@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.demo.userservice.model.Customer;
@@ -17,4 +18,7 @@ public interface DBServiceClient {
 
     @PostMapping(value = "/private/v1/add/customer")
     void saveCustomer(Customer customerData);
+    
+    @GetMapping("/private/v1/get/customer/{id}")
+    Customer getCustomerById(@PathVariable("id") Long id);
 }

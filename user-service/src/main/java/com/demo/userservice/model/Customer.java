@@ -1,7 +1,17 @@
 package com.demo.userservice.model;
 
-public class Customer {
+import java.io.Serializable;
 
+import org.springframework.data.redis.core.RedisHash;
+
+@RedisHash
+public class Customer implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String id;
 	private String name;
 	private String address;
