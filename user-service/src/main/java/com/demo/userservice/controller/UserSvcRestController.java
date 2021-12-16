@@ -55,4 +55,10 @@ public class UserSvcRestController {
 		}		
 		return null;
 	}
+	
+	@GetMapping("/get/allfromredis")
+	public List<Customer> getAllCustomerFromRedis() {
+		log.info("Returning all from redis..");
+		return databaseService.findAllCustomerFromRedis();
+	}
 }

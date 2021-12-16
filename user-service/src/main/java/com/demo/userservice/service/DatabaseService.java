@@ -1,5 +1,6 @@
 package com.demo.userservice.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,12 @@ public class DatabaseService {
 	public void save(Customer customer) {
 		dbServiceClient.saveCustomer(customer);
 	}
+	
+	public List<Customer> findAllCustomerFromRedis() {	
+		List<Customer> customerList = new ArrayList<>();
+		customerRedisRepository.findAll().forEach(customerList :: add);
+		return customerList;
+	} 
 
 	
 }
