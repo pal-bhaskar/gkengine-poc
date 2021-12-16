@@ -2,6 +2,8 @@ package com.demo.userservice.redis;
 
 import java.time.Duration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,8 @@ public class RedisConfig {
 
 	@Value("${redis.port:6379}")
 	private int redisPort;
+	
+	private Logger log = LoggerFactory.getLogger(RedisConfig.class);
 
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
@@ -36,7 +40,7 @@ public class RedisConfig {
 		poolConfig.setNumTestsPerEvictionRun(3);
 		poolConfig.setBlockWhenExhausted(true);
 		JedisConnectionFactory factory = new JedisConnectionFactory(poolConfig);
-
+		log.info("*********** redis host: {}", redisHost);
 		factory.setHostName(redisHost);
 		factory.setUsePool(true);
 		factory.setPort(redisPort);
