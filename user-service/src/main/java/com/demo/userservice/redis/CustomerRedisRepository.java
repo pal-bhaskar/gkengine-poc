@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.demo.userservice.model.Customer;
 
-public interface CustomerRedisRepository extends CrudRepository<Customer, Long>{
+public interface CustomerRedisRepository extends CrudRepository<Customer, String>{
 
 }

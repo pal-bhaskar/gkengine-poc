@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.data.redis.core.RedisHash;
 
-@RedisHash
+@RedisHash(timeToLive=30)
 public class Customer implements Serializable{
 
 	/**
