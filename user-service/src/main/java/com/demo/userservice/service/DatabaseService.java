@@ -1,17 +1,19 @@
 package com.demo.userservice.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.demo.userservice.clients.DBServiceClient;
 import com.demo.userservice.model.Customer;
-import com.demo.userservice.redis.CustomerRedisRepository;
+
 
 @Service
 public class DatabaseService {
@@ -21,36 +23,28 @@ public class DatabaseService {
 	@Autowired
 	private DBServiceClient dbServiceClient;
 	
-	@Autowired
-	private CustomerRedisRepository customerRedisRepository;
-
 	public List<Customer> findAllCustomer() {	
 		return dbServiceClient.getCustomers();
 	}
 	
-	public Optional<Customer> findCustomerById(Long id) {
-		Optional<Customer> c = customerRedisRepository.findById(id);
-		if (c.isPresent()) {
-			log.info("Customer is present in Redis...");
-			return c;
-		}
-		Customer customer = dbServiceClient.getCustomerById(id);
-		if (customer!= null) {
-			customerRedisRepository.save(customer);
-			log.info("Customer data saved into Redis...");
-		}
-		return Optional.of(customer);
-	}
-
-	public void save(Customer customer) {
-		dbServiceClient.saveCustomer(customer);
+	@CachePut(value="customerList", key="#customer.getId()")
+	public Customer save(Customer customer) {
+		customer.setId(UUID.randomUUID().toString());
+		Customer c  = dbServiceClient.saveCustomer(customer);
+		log.info("saved customer details- {}", c);
+		return c;
 	}
 	
-	public List<Customer> findAllCustomerFromRedis() {	
-		List<Customer> customerList = new ArrayList<>();
-		customerRedisRepository.findAll().forEach(customerList :: add);
-		return customerList;
-	} 
-
+	@Cacheable(value="customerList", key="#id")
+	public Customer findCustomerById(String id) {
+		Customer customer = dbServiceClient.getCustomerById(id);
+		log.info("Customer is present in DB.. {}", customer);
+		return customer;
+	}
+	
+	@CacheEvict(value = "customerList", key="#id")
+	public void flushDataFromCache(String id) {
+		log.info("removed data from cache for {}", id);
+	}
 	
 }

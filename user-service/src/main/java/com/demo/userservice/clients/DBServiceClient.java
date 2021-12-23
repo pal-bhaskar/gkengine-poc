@@ -17,8 +17,8 @@ public interface DBServiceClient {
     List<Customer> getCustomers();
 
     @PostMapping(value = "/private/v1/add/customer")
-    void saveCustomer(Customer customerData);
+    Customer saveCustomer(Customer customerData);
     
     @GetMapping("/private/v1/get/customer/{id}")
-    Customer getCustomerById(@PathVariable("id") Long id);
+    Customer getCustomerById(@PathVariable("id") String id);
 }

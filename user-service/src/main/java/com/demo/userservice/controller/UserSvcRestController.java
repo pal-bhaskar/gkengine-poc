@@ -1,11 +1,11 @@
 package com.demo.userservice.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,26 +39,24 @@ public class UserSvcRestController {
 	}
 	
 	@PostMapping("/add/customer")
-	public void addContent(@RequestBody Customer customer) {
-		databaseService.save(customer);
+	public Customer addContent(@RequestBody Customer customer) {
+		Customer c= databaseService.save(customer);
 		log.info("customer data saved successfully..");
+		return c;
 	}
 	
 	@GetMapping("/get/customer/{id}")
-	public Customer getCustomerById(@PathVariable Long id) {
+	public Customer getCustomerById(@PathVariable String id) {
 		
-		Optional<Customer> customer = databaseService.findCustomerById(id);
-		if (customer.isPresent()) {
-			Customer c = customer.get();
+		Customer c = databaseService.findCustomerById(id);
+
 			log.info("returning customer list ... {}",c);
 			return c;
-		}		
-		return null;
 	}
 	
-	@GetMapping("/get/allfromredis")
-	public List<Customer> getAllCustomerFromRedis() {
-		log.info("Returning all from redis..");
-		return databaseService.findAllCustomerFromRedis();
+	@DeleteMapping("/flush/{id}")
+	public void flushData(@PathVariable String id) {
+		databaseService.flushDataFromCache(id);
 	}
+	
 }

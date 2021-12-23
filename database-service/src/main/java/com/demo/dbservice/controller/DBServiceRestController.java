@@ -27,7 +27,7 @@ public class DBServiceRestController {
 	private DatabaseService databaseService;
 
 	@GetMapping("/get/customer/{id}")
-	public Customer getCustomerById(@PathVariable Long id) {
+	public Customer getCustomerById(@PathVariable String id) {
 		
 		Optional<Customer> customer = databaseService.findById(id);
 		if (customer.isPresent()) {
@@ -48,10 +48,11 @@ public class DBServiceRestController {
 	}
 	
 	@PostMapping("/add/customer")
-	public void addContent(@RequestBody Customer customer) {
+	public Customer addContent(@RequestBody Customer customer) {
 		log.info("adding customer ... {}",customer);
-		databaseService.save(customer);
-		log.info("successfully added new customer...");
+		Customer c = databaseService.save(customer);
+		log.info("successfully added new customer...{}", c);
+		return c;
 	}
 	
 }
