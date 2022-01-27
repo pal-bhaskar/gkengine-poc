@@ -1,4 +1,4 @@
-package com.demo.userservice.redis;
+/*package com.demo.userservice.redis;
 
 import java.time.Duration;
 
@@ -22,3 +22,4 @@ public class UserCacheConfig {
 	}
 	
 }
+*/

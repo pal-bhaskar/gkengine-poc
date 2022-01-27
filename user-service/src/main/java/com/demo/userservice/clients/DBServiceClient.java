@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.demo.userservice.model.Customer;
 
-//@FeignClient(value="database-service")
-@FeignClient(name = "database-service", url = "${DATABASE_SERVICE_HOST:http://localhost}:8082")
+@FeignClient(value="database-service")
+//@FeignClient(name = "database-service", url = "${DATABASE_SERVICE_HOST:http://localhost}:8082")
 public interface DBServiceClient {
 
     @GetMapping(value = "/private/v1/get/allcustomer", produces = "application/json")
